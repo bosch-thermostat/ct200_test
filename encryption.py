@@ -56,24 +56,29 @@ class Encryption:
         Padding is not working for lenght less than 2.
         """
         decrypted = "{}"
-        print("Decrypting", enc)
+        # print("Decrypting", enc)
         try:
             if enc and len(enc) > 2:
                 enc = base64.b64decode(enc)
-                print("Encrypted string: ", enc)
+                # print("Encrypted string: ", enc)
                 if len(enc) % BS != 0:
                     enc = self._pad(enc)
                 cipher = Decrypter(
                     AESModeOfOperationECB(self._key), padding=PADDING_NONE
                 )
                 decrypted = cipher.feed(enc) + cipher.feed()
-                return decrypted.decode("utf8").rstrip(chr(0))
+                out = decrypted.decode("utf8").rstrip(chr(0))
+                print("MAMAM!!!")
+                print(out)
+                return out
             return decrypted
         except UnicodeDecodeError as err:
-            _LOGGER.error(f"Unable to decrypt: {decrypted} with error: {err}")
-            print("CAN'T DECRYPT")
+            # _LOGGER.error(f"Unable to decrypt: {decrypted} with error: {err}")
+            # print("CAN'T DECRYPT")
+            return False
         except Exception as err:
-            print("ERROR ENCRYPTION")
+            return False
+            # print("ERROR ENCRYPTION")
 
     def _pad(self, _s):
         """Pad of encryption."""

@@ -20,6 +20,8 @@ ACCESS_KEY = os.getenv('ACCESS_KEY')
 PASSWORD = os.getenv('PASSWORD')
 TO_DECRYPT = os.getenv('TO_DECRYPT')
 
+
+
 async def main():
     loop = asyncio.get_event_loop()
     
@@ -34,26 +36,40 @@ async def main():
 
 def just_decrypt():
     print("SUCCESS IF MSG LOOK LIKE READABLE JSON")
-    print("MAGIC IVT")
-    print("")
-    enc1 = Encryption(access_key=ACCESS_KEY, password=PASSWORD, magic=MAGIC_IVT)
-    enc1.decrypt(enc=TO_DECRYPT)
+    # print("MAGIC IVT")
+    # print("")
+    # enc1 = Encryption(access_key=ACCESS_KEY, password=PASSWORD, magic=MAGIC_IVT)
+    # enc1.decrypt(enc=TO_DECRYPT)
     
-    print("")
-    print("MAGIC NEFIT")
-    print("")
+    # print("")
+    # print("MAGIC NEFIT")
+    # print("")
 
-    enc2 = Encryption(access_key=ACCESS_KEY, password=PASSWORD, magic=MAGIC_NEFIT)
-    enc2.decrypt(enc=TO_DECRYPT)
+    # enc2 = Encryption(access_key=ACCESS_KEY, password=PASSWORD, magic=MAGIC_NEFIT)
+    # enc2.decrypt(enc=TO_DECRYPT)
 
-    print("")
-    print("MAGIC UNKNOWN")
-    print("")
+    # print("")
+    # print("MAGIC UNKNOWN")
+    # print("")
 
-    magic = bytearray()
-    magic.extend("qNuxaCVIT1N3TCUhnMGd".encode())
-    enc3 = Encryption(access_key=ACCESS_KEY, password=PASSWORD, magic=magic)
-    enc3.decrypt(enc=TO_DECRYPT)
+    # magic = bytearray()
+    # magic.extend("qNuxaCVIT1N3TCUhnMGd".encode())
+    # enc3 = Encryption(access_key=ACCESS_KEY, password=PASSWORD, magic=magic)
+    # enc3.decrypt(enc=TO_DECRYPT)
+    stop = 64
+    with open('libcomlib-android.so', 'rb') as f:
+        hexdata = f.read().hex()
+        max = len(hexdata)
+        for i in range(0, max, 2):
+            mm = hexdata[i:i+stop]
+            mag = bytearray.fromhex(mm)
+            enc = Encryption(access_key=ACCESS_KEY, password=PASSWORD, magic=mag)
+            ddc = enc.decrypt(enc=TO_DECRYPT)
+            print("TRYING MAGIC", mm, ddc)
+            if ddc:
+                print("JAJ", ddc)
+                break
+
 
 if TO_DECRYPT:
     just_decrypt()
