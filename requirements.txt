@@ -1,0 +1,3 @@
+pyaes>=1.6.1
+aioxmpp>=0.12.1
+python-dotenv
