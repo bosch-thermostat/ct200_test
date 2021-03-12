@@ -38,3 +38,4 @@ It will try to decrypt it without connecting to XMPP server against 3 different 
 
 You can try to find 32 bytes MAGIC (if it is the method XMPP server uses.)
 
+CREATE ISSUE WITH MAGIC IF YOU THINK YOU FOUND IT!
